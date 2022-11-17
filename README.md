@@ -8,8 +8,14 @@ Please follow [DINO's instruction](https://github.com/IDEA-Research/DINO) for in
 
 ## Training
 
-* Train on COCO with FocalNet-L:
+* Train on COCO with FocalNet-L with 3 focal levels:
 
 ```
-python -m torch.distributed.launch --nproc_per_node={ngpus} main.py --config_file config/DINO/DINO_4scale_focalnet.py --coco_path {coco_path} --output_dir {output_dir}
+python -m torch.distributed.launch --nproc_per_node={ngpus} main.py --config_file config/DINO/DINO_4scale_focalnet_fl3.py --coco_path {coco_path} --output_dir {output_dir}
+```
+
+* Train on COCO with FocalNet-L with 4 focal levels:
+
+```
+python -m torch.distributed.launch --nproc_per_node={ngpus} main.py --config_file config/DINO/DINO_4scale_focalnet_fl4.py --coco_path {coco_path} --output_dir {output_dir}
 ```
