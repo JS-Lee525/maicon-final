@@ -30,8 +30,7 @@ from util.misc import NestedTensor, clean_state_dict, is_main_process
 from .position_encoding import build_position_encoding
 from .convnext import build_convnext
 from .swin_transformer import build_swin_transformer
-
-
+from .focal import build_focalnet
 
 class FrozenBatchNorm2d(torch.nn.Module):
     """
@@ -203,6 +202,51 @@ def build_backbone(args):
         _tmp_st_output = backbone.load_state_dict(_tmp_st, strict=False)
         print(str(_tmp_st_output))
         bb_num_channels = backbone.num_features[4 - len(return_interm_indices):]
+    elif args.backbone in [
+        'focalnet_L_384_22k', 
+        'focalnet_L_384_22k_fl4', 
+        'focalnet_XL_384_22k',
+        'focalnet_XL_384_22k_fl4', 
+        'focalnet_H_224_22k',
+        'focalnet_H_224_22k_fl4',         
+        ]:
+        # added by Jianwei
+        backbone = build_focalnet(args.backbone, \
+                    focal_levels=args.focal_levels, \
+                    focal_windows=args.focal_windows, \
+                    out_indices=tuple(return_interm_indices), \
+                    use_checkpoint=use_checkpoint)
+
+        # freeze some layers
+        if backbone_freeze_keywords is not None:
+            for name, parameter in backbone.named_parameters():
+                for keyword in backbone_freeze_keywords:
+                    if keyword in name:
+                        parameter.requires_grad_(False)
+                        break
+
+        pretrained_dir = './'
+        PTDICT = {
+            'focalnet_L_384_22k': 'focalnet_large_lrf_384.pth',
+            'focalnet_L_384_22k_fl4': 'focalnet_large_lrf_384_fl4.pth',            
+            'focalnet_XL_384_22k': 'focalnet_xlarge_lrf_384.pth',
+            'focalnet_XL_384_22k_fl4': 'focalnet_xlarge_lrf_384_fl4.pth',
+            'focalnet_H_224_22k': 'focalnet_huge_lrf_224.pth', 
+            'focalnet_H_224_22k_fl4': 'focalnet_huge_lrf_224_fl4.pth', 
+        }
+        pretrainedpath = os.path.join(pretrained_dir, PTDICT[args.backbone])
+        checkpoint = torch.load(pretrainedpath, map_location='cpu')['model']
+        from collections import OrderedDict
+        def key_select_function(keyname):
+            if 'head' in keyname:
+                return False
+            if args.dilation and 'layers.3' in keyname:
+                return False
+            return True        
+        _tmp_st = OrderedDict({k:v for k, v in clean_state_dict(checkpoint).items() if key_select_function(k)})
+        _tmp_st_output = backbone.load_state_dict(_tmp_st, strict=False)
+        print(str(_tmp_st_output))
+        bb_num_channels = backbone.num_features[4 - len(return_interm_indices):]   
     elif args.backbone in ['convnext_xlarge_22k']:
         backbone = build_convnext(modelname=args.backbone, pretrained=True, out_indices=tuple(return_interm_indices),backbone_dir=args.backbone_dir)
         bb_num_channels = backbone.dims[4 - len(return_interm_indices):]
