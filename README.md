@@ -30,7 +30,7 @@ All models are provided in:
 
 If you find this repo useful to your project, please consider to cite it with following bib:
 
-    @misc{https://doi.org/10.48550/arxiv.2203.11926,  
+    @misc{yang2022focalnet,  
       author = {Yang, Jianwei and Li, Chunyuan and Dai, Xiyang and Yuan, Lu and Gao, Jianfeng},
       title = {Focal Modulation Networks},
       publisher = {arXiv},
