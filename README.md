@@ -1,6 +1,6 @@
 # FocalNet for Object Detection with DINO
 
-This repo contains the code for reproducing object detection results of FocalNets. It is based on [DINO](https://github.com/IDEA-Research/DINO).
+This repo contains the code for reproducing object detection results of our [FocalNets](https://arxiv.org/abs/2203.11926). It is based on [DINO](https://github.com/IDEA-Research/DINO).
 
 ## Installation
 
