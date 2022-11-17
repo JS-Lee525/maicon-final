@@ -19,3 +19,32 @@ python -m torch.distributed.launch --nproc_per_node={ngpus} main.py --config_fil
 ```
 python -m torch.distributed.launch --nproc_per_node={ngpus} main.py --config_file config/DINO/DINO_4scale_focalnet_fl4.py --coco_path {coco_path} --output_dir {output_dir}
 ```
+
+## Model Zoos
+
+All models are provided in:
+
+> **Focal Modulation Networks**: [Focal Modulation Networks Model Zoo](https://github.com/microsoft/FocalNet).
+
+## Citation
+
+If you find this repo useful to your project, please consider to cite it with following bib:
+
+    @misc{https://doi.org/10.48550/arxiv.2203.11926,  
+      author = {Yang, Jianwei and Li, Chunyuan and Dai, Xiyang and Yuan, Lu and Gao, Jianfeng},
+      title = {Focal Modulation Networks},
+      publisher = {arXiv},
+      year = {2022},
+    }
+
+and also:
+
+    @misc{zhang2022dino,
+          title={DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection}, 
+          author={Hao Zhang and Feng Li and Shilong Liu and Lei Zhang and Hang Su and Jun Zhu and Lionel M. Ni and Heung-Yeung Shum},
+          year={2022},
+          eprint={2203.03605},
+          archivePrefix={arXiv},
+          primaryClass={cs.CV}
+    }
+
