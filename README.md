@@ -1,4 +1,4 @@
-# GenCD
+# GenCD (read_data, model loading 수정 중)
 ## Quickstart
 ### Train
 ```bash
