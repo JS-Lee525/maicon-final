@@ -21,20 +21,20 @@ import torch.nn.functional as F
 from torch import nn
 from torchvision.ops.boxes import nms
 
-from util import box_ops
-from util.misc import (NestedTensor, nested_tensor_from_tensor_list,
+from gencd.models.networks.focaldino.util import box_ops
+from gencd.models.networks.focaldino.util.misc import (NestedTensor, nested_tensor_from_tensor_list,
                        accuracy, get_world_size, interpolate,
                        is_dist_avail_and_initialized, inverse_sigmoid)
 
-from .backbone import build_backbone
-from .matcher import build_matcher
-from .segmentation import (DETRsegm, PostProcessPanoptic, PostProcessSegm,
+from gencd.models.networks.focaldino.dino.backbone import build_backbone
+from gencd.models.networks.focaldino.dino.matcher import build_matcher
+from gencd.models.networks.focaldino.dino.segmentation import (DETRsegm, PostProcessPanoptic, PostProcessSegm,
                            dice_loss)
-from .deformable_transformer import build_deformable_transformer
-from .utils import sigmoid_focal_loss, MLP
+from gencd.models.networks.focaldino.dino.deformable_transformer import build_deformable_transformer
+from gencd.models.networks.focaldino.dino.utils import sigmoid_focal_loss, MLP
 
-from ..registry import MODULE_BUILD_FUNCS
-from .dn_components import prepare_for_cdn,dn_post_process
+from gencd.models.networks.focaldino.registry import MODULE_BUILD_FUNCS
+from gencd.models.networks.focaldino.dino.dn_components import prepare_for_cdn,dn_post_process
 class DINO(nn.Module):
     """ This is the Cross-Attention Detector module that performs object detection """
     def __init__(self, backbone, transformer, num_classes, num_queries, 

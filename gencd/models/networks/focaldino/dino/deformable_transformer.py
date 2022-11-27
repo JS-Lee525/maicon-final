@@ -15,13 +15,13 @@ import math, random
 import copy
 from typing import Optional
 
-from util.misc import inverse_sigmoid
+from gencd.models.networks.focaldino.util.misc import inverse_sigmoid
 
 import torch
 from torch import nn, Tensor
 
-from .utils import gen_encoder_output_proposals, MLP,_get_activation_fn, gen_sineembed_for_position
-from .ops.modules import MSDeformAttn
+from gencd.models.networks.focaldino.dino.utils import gen_encoder_output_proposals, MLP,_get_activation_fn, gen_sineembed_for_position
+from gencd.models.networks.focaldino.dino.ops.modules import MSDeformAttn
 
 class DeformableTransformer(nn.Module):
 

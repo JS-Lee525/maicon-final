@@ -25,12 +25,12 @@ from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
 
 
-from util.misc import NestedTensor, clean_state_dict, is_main_process
+from gencd.models.networks.focaldino.util.misc import NestedTensor, clean_state_dict, is_main_process
 
-from .position_encoding import build_position_encoding
-from .convnext import build_convnext
-from .swin_transformer import build_swin_transformer
-from .focal import build_focalnet
+from gencd.models.networks.focaldino.dino.position_encoding import build_position_encoding
+from gencd.models.networks.focaldino.dino.convnext import build_convnext
+from gencd.models.networks.focaldino.dino.swin_transformer import build_swin_transformer
+from gencd.models.networks.focaldino.dino.focal import build_focalnet
 
 class FrozenBatchNorm2d(torch.nn.Module):
     """

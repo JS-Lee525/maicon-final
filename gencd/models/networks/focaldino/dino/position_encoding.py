@@ -18,7 +18,7 @@ import math
 import torch
 from torch import nn
 
-from util.misc import NestedTensor
+from gencd.models.networks.focaldino.util.misc import NestedTensor
 
 
 class PositionEmbeddingSine(nn.Module):
