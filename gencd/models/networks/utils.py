@@ -50,6 +50,14 @@ def define_network(net_config, net_module=None):
         net.init_weights()        
         return net
     
+    if net_module == 'build_focaldino':
+      from gencd.models.networks.focaldino.registry import MODULE_BUILD_FUNCS
+      import gencd.models.networks.focaldino
+
+      build_func =  MODULE_BUILD_FUNCS.get('dino')
+      model, _, _ = build_func()
+      return model
+
     if net_module is None:
         net_module = 'gencd.models.networks'
     

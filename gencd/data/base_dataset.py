@@ -19,13 +19,13 @@ class BaseDataset(Dataset):
         return len(self.keys)
 
     def __getitem__(self, index):
-        image, image2, mask, metadata = self.read_data(index)
+        image, bboxes, metadata = self.read_data(index)
         
         input_items = {
-            'image': image, 'image2': image2
+            'image': image
         }
-        if mask is not None:
-            input_items['mask'] = mask
+        if bboxes is not None:
+            input_items['bboxes'] = bboxes
                 
         return_items = self.transform(**input_items)
         return_items['metadata'] = metadata
@@ -38,7 +38,7 @@ class BaseDataset(Dataset):
     
     ## override this to read data by index. must return image, image2, mask, meta or image, image2, None, meta.
     def read_data(self, index):
-        return None, None, None, None
+        return None, None, None
     
     ## override this to define self.transform
     def prepare_transforms(self):

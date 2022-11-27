@@ -21,7 +21,7 @@ class MyDataModule(pl.LightningDataModule):
             dataset_class = find_dataset_using_name(self.opt.dataset_mode)
             self.ds_train = dataset_class(self.opt, phase='train')
             print(f"train dataset [{type(self.ds_train).__name__}] was created")  
-            self.ds_valid = dataset_class(self.opt, phase='val')
+            self.ds_valid = dataset_class(self.opt, phase='valid')
             print(f"valid dataset [{type(self.ds_valid).__name__}] was created")  
 
         if stage == "test" or stage is None:            

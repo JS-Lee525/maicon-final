@@ -38,8 +38,8 @@ loggers=tb
 wandb_project=maicon
 
 # network
-net_module=gencd.models.networks
-net_config=config/snunet_ch3.yaml
+net_module=build_focaldino
+net_config=config/FocalDino/DINO_4scale_focalnet_large_fl3.py
 load_pretrained_network=temp/pretrained/snunet-32-weight.pt
 
 
