@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 # basic
-exp_name=exp
+exp_name=FocalDino
 exp_number=1
 
 # data
 num_class=3
-datadir=./temp/data/01_data
+datadir=/content/drive/Mydrive/thermal_example
 dataset_mode=maicon_image_v0
-patch_size=512
-patch_resize_factor=2
+patch_size=416
+patch_resize_factor=1
 patch_overlap=0
 split=./temp/maicon-split.pkl
 
