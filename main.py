@@ -264,7 +264,7 @@ def main(args):
             lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
             args.start_epoch = checkpoint['epoch'] + 1
 
-    if (not args.resume) and args.pretrain_model_path:
+    if (args.eval or (not args.resume)) and args.pretrain_model_path:
         checkpoint = torch.load(args.pretrain_model_path, map_location='cpu')['model']
         from collections import OrderedDict
         _ignorekeywordlist = args.finetune_ignore if args.finetune_ignore else []
