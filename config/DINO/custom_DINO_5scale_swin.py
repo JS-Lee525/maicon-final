@@ -36,16 +36,14 @@ lr_drop_list = [33, 45]
 
 modelname = 'dino'
 frozen_weights = None
-backbone = 'focalnet_L_384_22k'
-focal_levels = 3
-focal_windows = 5
+backbone = 'swin_L_384_22k'
 use_checkpoint = True
 
 dilation = False
 position_embedding = 'sine'
 pe_temperatureH = 20
 pe_temperatureW = 20
-return_interm_indices = [1, 2, 3]
+return_interm_indices = [0, 1, 2, 3]
 backbone_freeze_keywords = None
 enc_layers = 6
 dec_layers = 6
@@ -68,7 +66,7 @@ dabdetr_deformable_decoder = False
 use_deformable_box_attn = False
 box_attn_type = 'roi_align'
 dec_layer_number = None
-num_feature_levels = 4
+num_feature_levels = 5
 enc_n_points = 4
 dec_n_points = 4
 decoder_layer_noise = False
