@@ -6,6 +6,18 @@ This repo contains the code for reproducing object detection results of our [Foc
 
 Please follow [DINO's instruction](https://github.com/IDEA-Research/DINO) for installation.
 
+## CUSTOM
+
+## CUSTOM METHODS
+* Train
+```
+python main.py --amp --save_log --config_file config/DINO/custom_DINO_4scale_focalnet_large_fl3.py --options backbone_dir=temp/pretrained --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --finetune_ignore label_enc.weight class_embed --output_dir runs/flir/00001
+```
+* Train
+```
+python main.py --amp --save_log --config_file config/DINO/custom_DINO_4scale_swin.py --options backbone_dir=temp/pretrained --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --finetune_ignore label_enc.weight class_embed --output_dir runs/flir/00002 --pretrain_model_path temp/pretrained/dino/checkpoint0029_4scale_swin.pth 
+```
+
 ## Training
 
 * Train on COCO with FocalNet-L with 3 focal levels:
