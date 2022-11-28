@@ -143,6 +143,37 @@ class Joiner(nn.Sequential):
         return out, pos
 
 
+def load_pretrained_net(net, state_dict):
+    '''allow partial loading
+    '''
+
+    all_okay = True
+
+    new_weights = net.state_dict()
+
+    # partial loading. check key and shape
+    for k in new_weights.keys():
+        if not k in state_dict.keys():
+            print(f'{k} is missing in pretrained')
+            all_okay = False
+        else:
+            if new_weights[k].shape != state_dict[k].shape:
+                print(f'skip {k}, required shape: {new_weights[k].shape}, pretrained shape: {state_dict[k].shape}')
+                all_okay = False
+            else:       
+                new_weights[k] = state_dict[k]
+    
+    try:
+        outstr = net.load_state_dict(new_weights)
+        if all_okay:
+            print('<All weights loaded successfully>')
+    except:
+        print(f'cannot load {path}. using intial net.')
+        outstr = ""
+        pass
+    
+    return net, outstr
+    
 def build_backbone(args):
     """
     Useful args:
@@ -171,6 +202,7 @@ def build_backbone(args):
     elif args.backbone in ['swin_T_224_1k', 'swin_B_224_22k', 'swin_B_384_22k', 'swin_L_224_22k', 'swin_L_384_22k']:
         pretrain_img_size = int(args.backbone.split('_')[-2])
         backbone = build_swin_transformer(args.backbone, \
+                    in_chans=args.in_chans, \
                     pretrain_img_size=pretrain_img_size, \
                     out_indices=tuple(return_interm_indices), \
                 dilation=args.dilation, use_checkpoint=use_checkpoint)
@@ -183,6 +215,7 @@ def build_backbone(args):
                         parameter.requires_grad_(False)
                         break
 
+        '''
         pretrained_dir = args.backbone_dir
         PTDICT = {
             'swin_T_224_1k': 'swin_tiny_patch4_window7_224.pth',
@@ -199,8 +232,10 @@ def build_backbone(args):
                 return False
             return True
         _tmp_st = OrderedDict({k:v for k, v in clean_state_dict(checkpoint).items() if key_select_function(k)})
-        _tmp_st_output = backbone.load_state_dict(_tmp_st, strict=False)
+        #_tmp_st_output = backbone.load_state_dict(_tmp_st, strict=False)
+        backbone, _tmp_st_output = load_pretrained_net(backbone, _tmp_st) 
         print(str(_tmp_st_output))
+        '''
         bb_num_channels = backbone.num_features[4 - len(return_interm_indices):]
     elif args.backbone in [
         'focalnet_L_384_22k', 
@@ -212,6 +247,7 @@ def build_backbone(args):
         ]:
         # added by Jianwei
         backbone = build_focalnet(args.backbone, \
+                    in_chans=args.in_chans, \
                     focal_levels=args.focal_levels, \
                     focal_windows=args.focal_windows, \
                     out_indices=tuple(return_interm_indices), \
@@ -225,7 +261,10 @@ def build_backbone(args):
                         parameter.requires_grad_(False)
                         break
 
-        pretrained_dir = './'
+        if 'backbone_dir' in args:
+            pretrained_dir = args.backbone_dir
+        else:
+            pretrained_dir = './'
         PTDICT = {
             'focalnet_L_384_22k': 'focalnet_large_lrf_384.pth',
             'focalnet_L_384_22k_fl4': 'focalnet_large_lrf_384_fl4.pth',            
@@ -244,7 +283,8 @@ def build_backbone(args):
                 return False
             return True        
         _tmp_st = OrderedDict({k:v for k, v in clean_state_dict(checkpoint).items() if key_select_function(k)})
-        _tmp_st_output = backbone.load_state_dict(_tmp_st, strict=False)
+        #_tmp_st_output = backbone.load_state_dict(_tmp_st, strict=False)
+        backbone, _tmp_st_output = load_pretrained_net(backbone, _tmp_st)        
         print(str(_tmp_st_output))
         bb_num_channels = backbone.num_features[4 - len(return_interm_indices):]   
     elif args.backbone in ['convnext_xlarge_22k']:

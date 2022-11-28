@@ -1,0 +1,4 @@
+# ninja log v5
+1	4061	1669442351712651200	/mnt/hdd/jwc/FocalNet-DINO/models/dino/ops/build/temp.linux-x86_64-cpython-39/mnt/hdd/jwc/FocalNet-DINO/models/dino/ops/src/cpu/ms_deform_attn_cpu.o	53a164cb083257cd
+0	11685	1669442359335998600	/mnt/hdd/jwc/FocalNet-DINO/models/dino/ops/build/temp.linux-x86_64-cpython-39/mnt/hdd/jwc/FocalNet-DINO/models/dino/ops/src/vision.o	20f88b5286dd2179
+1	12511	1669442360166651300	/mnt/hdd/jwc/FocalNet-DINO/models/dino/ops/build/temp.linux-x86_64-cpython-39/mnt/hdd/jwc/FocalNet-DINO/models/dino/ops/src/cuda/ms_deform_attn_cuda.o	bfb46d6de363e3f8

@@ -30,6 +30,36 @@ import models
 from util.slconfig import DictAction, SLConfig
 from util.utils import ModelEma, BestMetricHolder
 
+def load_pretrained_net(net, state_dict):
+    '''allow partial loading
+    '''
+
+    all_okay = True
+
+    new_weights = net.state_dict()
+
+    # partial loading. check key and shape
+    for k in new_weights.keys():
+        if not k in state_dict.keys():
+            print(f'{k} is missing in pretrained')
+            all_okay = False
+        else:
+            if new_weights[k].shape != state_dict[k].shape:
+                print(f'skip {k}, required shape: {new_weights[k].shape}, pretrained shape: {state_dict[k].shape}')
+                all_okay = False
+            else:       
+                new_weights[k] = state_dict[k]
+    
+    try:
+        outstr = net.load_state_dict(new_weights)
+        if all_okay:
+            print('<All weights loaded successfully>')
+    except:
+        print(f'cannot load {path}. using intial net.')
+        outstr = ""
+        pass
+    
+    return net, outstr
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
@@ -248,7 +278,9 @@ def main(args):
         logger.info("Ignore keys: {}".format(json.dumps(ignorelist, indent=2)))
         _tmp_st = OrderedDict({k:v for k, v in utils.clean_state_dict(checkpoint).items() if check_keep(k, _ignorekeywordlist)})
 
-        _load_output = model_without_ddp.load_state_dict(_tmp_st, strict=False)
+        #_load_output = model_without_ddp.load_state_dict(_tmp_st, strict=False)
+        model_without_ddp, _load_output = load_pretrained_net(model_without_ddp, _tmp_st) 
+        
         logger.info(str(_load_output))
 
         if args.use_ema:
