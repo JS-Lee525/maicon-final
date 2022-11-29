@@ -4,14 +4,14 @@ in_chans=1
 num_classes=15
 dn_labelbook_size=15
 
-data_aug_scales = [480, 512, 544, 576, 608, 640, 672, 704]
-data_aug_max_size = 1333
-data_aug_scales2_resize = [400, 500, 600]
-data_aug_scales2_crop = [384, 600]
-#data_aug_scales = [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]
+#data_aug_scales = [480, 512, 544, 576, 608, 640, 672, 704]
 #data_aug_max_size = 1333
 #data_aug_scales2_resize = [400, 500, 600]
 #data_aug_scales2_crop = [384, 600]
+data_aug_scales = [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]
+data_aug_max_size = 1333
+data_aug_scales2_resize = [400, 500, 600]
+data_aug_scales2_crop = [384, 600]
 data_aug_scale_overlap = None
 
 
@@ -43,7 +43,7 @@ dilation = False
 position_embedding = 'sine'
 pe_temperatureH = 20
 pe_temperatureW = 20
-return_interm_indices = [0, 1, 2, 3]
+return_interm_indices = [1, 2, 3]
 backbone_freeze_keywords = None
 enc_layers = 6
 dec_layers = 6
@@ -66,7 +66,7 @@ dabdetr_deformable_decoder = False
 use_deformable_box_attn = False
 box_attn_type = 'roi_align'
 dec_layer_number = None
-num_feature_levels = 5
+num_feature_levels = 4
 enc_n_points = 4
 dec_n_points = 4
 decoder_layer_noise = False
