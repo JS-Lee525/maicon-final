@@ -9,13 +9,18 @@ Please follow [DINO's instruction](https://github.com/IDEA-Research/DINO) for in
 ## CUSTOM
 
 ## CUSTOM METHODS
-* Train
+* Train 5 scale Swin DINO
 ```
-python main.py --amp --save_log --config_file config/DINO/custom_DINO_4scale_focalnet_large_fl3.py --options backbone_dir=temp/pretrained --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --finetune_ignore label_enc.weight class_embed --output_dir runs/flir/00001
+python main.py --amp --save_log --config_file config/DINO/custom_cosine_DINO_5scale_swin_12ep.py --options backbone_dir=temp/pretrained --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --finetune_ignore label_enc.weight class_embed --output_dir runs/flir/00007 --pretrain_model_path temp/pretrained/dino/checkpoint0027_5scale_swin.pth 
 ```
-* Train
+* Train 4 scale Swin DINO
 ```
-python main.py --amp --save_log --config_file config/DINO/custom_DINO_4scale_swin.py --options backbone_dir=temp/pretrained --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --finetune_ignore label_enc.weight class_embed --output_dir runs/flir/00002 --pretrain_model_path temp/pretrained/dino/checkpoint0029_4scale_swin.pth 
+python main.py --amp --save_log --config_file config/DINO/custom_DINO_4scale_swin_12ep.py --options backbone_dir=temp/pretrained --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --finetune_ignore label_enc.weight class_embed --output_dir runs/flir/00002 --pretrain_model_path temp/pretrained/dino/checkpoint0029_4scale_swin.pth 
+```
+
+* Eval validation
+```
+python main.py --config_file config/DINO/custom_cosine_DINO_5scale_swin.py --dataset_file custom --coco_path /home/jwchoi/Downloads/FLIRaligned/align --output_dir runs/flir/00007/best_eval --pretrain_model_path runs/flir/00007/checkpoint_best_regular.pth --amp --eval
 ```
 
 ## Training
