@@ -36,11 +36,11 @@ def build(image_set, args):
     # assert root.exists(), f'provided COCO path {root} does not exist'
     
     PATHS = {
-        "train": (root / "train", root / "train" / "_annotations.coco.json"),
-        "train_reg": (root / "train", root / "train" / "_annotations.coco.json"),
-        "val": (root / "valid", root / "valid" / "_annotations.coco.json"),
-        "eval_debug": (root / "valid", root / "valid" / "_annotations.coco.json"),
-        "test": (root / "test", root / "test" / "_annotations.coco.json"),
+        "train": (root / "train", root / "train_annot.json"),
+        "train_reg": (root / "train", root / "train_annot.json"),
+        "val": (root / "valid", root / "valid_annot.json"),
+        "eval_debug": (root / "valid", root / "valid_annot.json"),
+        #"test": (root / "test", root / "test" / "_annotations.coco.json"),
     }
 
     # add some hooks to datasets
